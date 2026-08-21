@@ -1,0 +1,30 @@
+{
+  "name": "CardVault",
+  "short_name": "CardVault",
+  "description": "Price intelligence and sell routing for World Cup 2026 trading cards.",
+  "start_url": "/?src=homescreen",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add cards",
+      "short_name": "Add",
+      "description": "Paste a list of cards, or photograph one",
+      "url": "/?open=bulk"
+    },
+    {
+      "name": "What to sell",
+      "short_name": "Sell",
+      "description": "Sell recommendations, highest stakes first",
+      "url": "/?open=actions"
+    }
+  ]
+}

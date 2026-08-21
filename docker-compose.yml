@@ -1,0 +1,83 @@
+name: cardvault
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cardvault}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cardvault}
+      POSTGRES_DB: ${POSTGRES_DB:-cardvault}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cardvault} -d ${POSTGRES_DB:-cardvault}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  migrate:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-cardvault}:${POSTGRES_PASSWORD:-cardvault}@db:5432/${POSTGRES_DB:-cardvault}
+    depends_on:
+      db: { condition: service_healthy }
+    command: ["sh", "-c", "node dist/cli/migrate.js && node dist/cli/seed.js"]
+    restart: "no"
+
+  api:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-cardvault}:${POSTGRES_PASSWORD:-cardvault}@db:5432/${POSTGRES_DB:-cardvault}
+      REDIS_URL: redis://redis:6379
+      PORT: 8080
+      PHOTO_DIR: /data/photos
+    ports:
+      - "${API_PORT:-8080}:8080"
+    # A BIND MOUNT, not a named volume, and that is the whole point.
+    #
+    # A named volume lives inside Docker's own storage where you cannot browse it, and
+    # `docker compose down -v` deletes it along with the database. This is a plain folder
+    # beside the project: it opens in Explorer, it survives every compose command including
+    # the destructive ones, and it is the one thing here that cannot be regenerated if lost.
+    volumes:
+      - ${PHOTO_DIR_HOST:-./photos}:/data/photos
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      migrate: { condition: service_completed_successfully }
+    command: ["node", "dist/server.js"]
+
+  worker:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-cardvault}:${POSTGRES_PASSWORD:-cardvault}@db:5432/${POSTGRES_DB:-cardvault}
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      migrate: { condition: service_completed_successfully }
+    command: ["node", "dist/worker.js"]
+
+volumes:
+  pgdata:
+  redisdata:

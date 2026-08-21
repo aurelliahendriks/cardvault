@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+*.log
+backups/
+# Photographs of your own cards. Not source, frequently large, and yours.
+photos/

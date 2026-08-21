@@ -1,0 +1,89 @@
+# Dev override: edit source, see it live, never rebuild.
+#
+# docker compose picks this file up automatically, so `docker compose up -d` uses it with
+# no extra flags. It changes three things about the api and worker services:
+#
+#   1. builds the `build` stage of the Dockerfile instead of the runtime stage, because
+#      that stage still has the dev dependencies - including tsx, which the slim runtime
+#      image deliberately omits
+#   2. bind-mounts src, web, db and tools over the image, so a saved file IS the file the
+#      container runs
+#   3. runs `tsx watch` rather than the compiled dist, so the API restarts itself on save
+#
+# The trade is startup speed and a slightly larger image; for a machine you are actively
+# editing on, that is obviously worth it.
+#
+# To ignore this file for a run - to check the production path still works, say:
+#
+#     docker compose -f docker-compose.yml up -d --build
+#
+# and to disable it permanently, rename it to docker-compose.override.yml.off
+#
+# ---------------------------------------------------------------------------
+# THE ONE THING THIS FILE DOES NOT COVER: A NEW npm PACKAGE
+# ---------------------------------------------------------------------------
+#
+# `- /app/node_modules` below is an ANONYMOUS VOLUME. Docker creates it once, populated from
+# the image, and then reuses it for the life of the container - which means it MASKS the
+# node_modules of every image you build afterwards. A new dependency in package.json is
+# therefore invisible no matter how many times you rebuild:
+#
+#     Error [ERR_MODULE_NOT_FOUND]: Cannot find package '@fastify/cookie'
+#
+# and the container still reports `Up`, because `tsx watch` survives the crash and keeps
+# restarting the process. `docker compose restart`, `up -d` and even `down` + `up` all keep
+# the volume. The flag that does not is:
+#
+#     docker compose build api worker
+#     docker compose up -d --force-recreate --renew-anon-volumes api worker
+#
+# Scoped to api and worker so the database's NAMED volume is untouched. Do NOT reach for
+# `down -v` - that deletes the database.
+#
+# So: source edits are free, .sql files are free, a new package costs one renew.
+
+services:
+  api:
+    build:
+      context: .
+      target: build
+    volumes:
+      - ./src:/app/src
+      - ./web:/app/web
+      - ./db:/app/db
+      - ./tools:/app/tools
+      # Same host folder as the production compose file mounts. Listed again because
+      # `volumes:` is REPLACED by an override, not merged - omit it here and photographs
+      # would silently start landing inside the container, where the next rebuild eats them.
+      - ${PHOTO_DIR_HOST:-./photos}:/data/photos
+      # Never let the host's node_modules shadow the image's - they are built for a
+      # different platform and this is the classic way to break a mounted Node container.
+      # Anonymous, so it also outlives image rebuilds: see the note at the top of this file
+      # before adding a dependency.
+      - /app/node_modules
+    environment:
+      NODE_ENV: development
+    command: ["npx", "tsx", "watch", "src/server.ts"]
+
+  worker:
+    build:
+      context: .
+      target: build
+    volumes:
+      - ./src:/app/src
+      - ./db:/app/db
+      - /app/node_modules
+    environment:
+      NODE_ENV: development
+    command: ["npx", "tsx", "watch", "src/worker.ts"]
+
+  # Migrations run from source too, so a new .sql file needs no rebuild either.
+  migrate:
+    build:
+      context: .
+      target: build
+    volumes:
+      - ./src:/app/src
+      - ./db:/app/db
+      - /app/node_modules
+    command: ["sh", "-c", "npx tsx src/cli/migrate.ts && npx tsx src/cli/seed.ts"]

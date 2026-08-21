@@ -1,0 +1,21 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--no-sandbox'] });
+const p = await b.newPage({ viewport: { width: 1500, height: 1050 }, deviceScaleFactor: 1.3 });
+const errs = [];
+p.on('pageerror', e => errs.push('PAGEERROR ' + e.message));
+p.on('console', m => { if (m.type() === 'error' && !/favicon/i.test(m.text())) errs.push(m.text()); });
+await p.goto('file:///home/claude/cardvault/cardvault-preview.html', { waitUntil: 'load' });
+await p.waitForTimeout(3000);
+console.log('player tiles:', await p.locator('.pcard').count());
+// count avatars that actually resolved to an svg data uri
+const imgs = await p.locator('.pcard img').evaluateAll(els => els.map(e => ({ ok: e.naturalWidth > 0, src: (e.getAttribute('src')||'').slice(0,40) })));
+console.log('avatars total:', imgs.length, 'broken:', imgs.filter(i => !i.ok).length);
+console.log('sample src:', imgs[0]?.src);
+await p.screenshot({ path: '/tmp/shots/prev-players.png' });
+const t = p.locator('.pcard', { hasText: 'Yamal' }).first();
+await (await t.count() ? t : p.locator('.pcard').first()).click();
+await p.waitForTimeout(1800);
+console.log('player page rows:', await p.locator('#pPage .crow').count());
+await p.screenshot({ path: '/tmp/shots/prev-player-page.png' });
+console.log('ERRORS:', errs.length ? errs.slice(0,5) : 'none');
+await b.close();

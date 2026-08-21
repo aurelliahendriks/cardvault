@@ -1,0 +1,212 @@
+{
+ "A|Base": [
+  "Bronze",
+  "Cubic",
+  "Diamond",
+  "Maze",
+  "Red and Blue Maze",
+  "Red and Gold",
+  "Red and Green",
+  "Silver (unnumbered; Rated Rookies #/349)",
+  "Blue Swirl (#/399)",
+  "Green and Blue Maze (#/270)",
+  "Blue Cubic (#/205)",
+  "Teal (#/199)",
+  "Orange (#/99)",
+  "Blue Pyramids (#/95)",
+  "Pink Swirl (#/89)",
+  "Red Swirl (#/79)",
+  "Red (#/75)",
+  "Red Cubic (#/50)",
+  "Blue (#/49)",
+  "Pink Cubic (#/45)",
+  "Pink Diamond (#/25)",
+  "Purple (#/25)",
+  "Red Pyramids (#/20)",
+  "Gold (#/10)",
+  "Gold Diamond (#/10)",
+  "Green (#/5)",
+  "Black (1/1)"
+ ],
+ "A|Base Optic": [
+  "Argyle",
+  "Holo",
+  "Ice",
+  "Plum Blossom",
+  "Velocity",
+  "Orange Velocity (#/199)",
+  "Red (#/199)",
+  "Orange (#/99)",
+  "Orange Ice (#/99)",
+  "Pink Velocity (#/99)",
+  "Blue (#/75)",
+  "Electricity (#/75)",
+  "Teal Mojo (#/49)",
+  "Pink Ice (#/25)",
+  "Purple Mojo (#/25)",
+  "Gold (#/10)",
+  "Dragon (#/8)",
+  "Green (#/5)",
+  "Black (1/1)",
+  "Black Pandora (1/1)",
+  "Gold Vinyl (1/1)"
+ ],
+ "A|Kaboom!": [
+  "Gold (#/10)",
+  "Black (1/1)"
+ ],
+ "A|Craftsmen": [
+  "Red",
+  "Silver",
+  "Blue (#/199)",
+  "Purple (#/99)",
+  "Pink (#/25)",
+  "Gold (#/10)",
+  "Green (#/5)",
+  "Black (1/1)"
+ ],
+ "A|Dominators": [
+  "Red",
+  "Silver",
+  "Blue (#/199)",
+  "Purple (#/99)",
+  "Pink (#/25)",
+  "Gold (#/10)",
+  "Green (#/5)",
+  "Black (1/1)"
+ ],
+ "A|Elite Series": [
+  "Red",
+  "Silver",
+  "Blue (#/199)",
+  "Purple (#/99)",
+  "Pink (#/25)",
+  "Gold (#/10)",
+  "Green (#/5)",
+  "Black (1/1)"
+ ],
+ "A|Magicians": [
+  "Red",
+  "Silver",
+  "Blue (#/199)",
+  "Purple (#/99)",
+  "Pink (#/25)",
+  "Gold (#/10)",
+  "Green (#/5)",
+  "Black (1/1)"
+ ],
+ "A|Net Marvels": [
+  "Red",
+  "Silver",
+  "Blue (#/199)",
+  "Purple (#/99)",
+  "Pink (#/25)",
+  "Gold (#/10)",
+  "Green (#/5)",
+  "Black (1/1)"
+ ],
+ "A|Pitch Kings": [
+  "Red",
+  "Silver",
+  "Blue (#/199)",
+  "Purple (#/99)",
+  "Pink (#/25)",
+  "Gold (#/10)",
+  "Green (#/5)",
+  "Black (1/1)"
+ ],
+ "A|Zero Gravity": [
+  "Red",
+  "Silver",
+  "Blue (#/199)",
+  "Purple (#/99)",
+  "Pink (#/25)",
+  "Gold (#/10)",
+  "Green (#/5)",
+  "Black (1/1)"
+ ],
+ "A|Rookie Kings": [
+  "Red",
+  "Silver",
+  "Blue (#/199)",
+  "Purple (#/99)",
+  "Pink (#/25)",
+  "Gold (#/10)",
+  "Green (#/5)",
+  "Black (1/1)"
+ ],
+ "A|Kit Kings": [
+  "Silver (#/99 or less)",
+  "Blue (#/49 or less)",
+  "Gold (#/10 or less)",
+  "Black (1/1)"
+ ],
+ "A|Kit Series": [
+  "Silver (#/99 or #/49)",
+  "Blue (#/49 or less)",
+  "Gold (#/10 or less)",
+  "Black (1/1)"
+ ],
+ "A|Signature Series": [
+  "Pink Ice",
+  "Pink Velocity",
+  "Dragon (#/299 or less)",
+  "Blue (#/199 or less)",
+  "Purple (#/99 or less)",
+  "Red (#/49 or less)",
+  "Gold (#/10 or less)",
+  "Green (#/5 or less)",
+  "Black (1/1)"
+ ],
+ "A|Beautiful Game Autographs": [
+  "Pink Ice",
+  "Pink Velocity",
+  "Dragon (#/299 or less)",
+  "Blue (#/199 or less)",
+  "Purple (#/99 or less)",
+  "Red (#/49 or less)",
+  "Gold (#/10 or less)",
+  "Green (#/5 or less)",
+  "Black (1/1)"
+ ],
+ "A|Beautiful Game Dual Autographs": [
+  "Pink Ice",
+  "Pink Velocity",
+  "Dragon (#/99 or less)",
+  "Blue (#/99 or less)",
+  "Purple (#/49 or less)",
+  "Red (#/25 or less)",
+  "Gold (#/10 or #/3)",
+  "Green (#/5 or #/2)",
+  "Black (1/1)"
+ ],
+ "B|Base": [
+  "Silver Prizm",
+  "Red Prizm",
+  "Blue Prizm",
+  "Orange Prizm",
+  "Silver Prizm",
+  "Red Prizm",
+  "Blue Prizm",
+  "Orange Prizm"
+ ],
+ "B|Prizm": [
+  "Prizm #/199"
+ ],
+ "B|Superstar": [
+  "Superstar #/199"
+ ],
+ "B|Legend": [
+  "Legend #/199"
+ ],
+ "B|Legacy": [
+  "Legacy #/59"
+ ],
+ "B|Golden": [
+  "Golden #/399",
+  "Golden #/59"
+ ],
+ "B|Gold Leaf": [
+  "Gold Leaf #/59"
+ ]
+}
